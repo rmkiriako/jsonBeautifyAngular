@@ -1,7 +1,7 @@
 {
 "version": 3,
 "mappings": "AAAA,SAAU;EACR,KAAK,EAAE,IAAI;EAEX,iCAAc;IACZ,KAAK,EAAE,IAAI;IACX,MAAM,EAAE,MAAM;IACd,KAAK,EAAE,IAAI;EAGb,kBAAS;IACP,UAAU,EAAE,IAAI;EAGlB,oBAAW;IACT,YAAY,EAAE,IAAI",
-"sources": ["beautify.scss"],
+"sources": ["../beautifyDirective/beautify.scss"],
 "names": [],
-"file": "beautify.css"
+"file": "app.css"
 }
