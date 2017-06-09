@@ -15,7 +15,7 @@ module.exports = function (grunt) {
                 cmd: 'sass',
                 args: [
                     '--watch',
-                    'public/:public/app.css'
+                    'public/:public/styles'
                 ],
                 options: {
                     wait: false
