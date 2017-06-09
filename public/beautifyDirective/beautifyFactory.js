@@ -5,6 +5,7 @@ angular.module('jsonBeautifyAngular')
 
         var maxCount = count = 1;
         var pairs = [{tabName: 0, raw: '', pretty: ''}];
+        var trashedPairs = [];
 
         beautify = function (raw) {
             pretty = "";
@@ -172,7 +173,9 @@ angular.module('jsonBeautifyAngular')
             },
 
             removePair: function (index) {
-                pairs.splice(index, 1);
+                var trashedPair = pairs.splice(index, 1)[0];
+                if (trashedPair.raw)
+                    trashedPairs.push(trashedPair);
                 if (count > 0)
                     count--;
                 else
@@ -182,6 +185,16 @@ angular.module('jsonBeautifyAngular')
             addPair: function () {
                 pairs[count++] = {tabName: maxCount++, raw: '', pretty: ''};
                 return count - 1;
+            },
+
+            getAllTrashedPairs: function () {
+                return trashedPairs;
+            },
+
+            restoreTrashedPair: function (index) {
+                var trashedPair = trashedPairs.splice(index, 1)[0];
+                pairs.push(trashedPair);
+                count++;
             }
         };
     });
