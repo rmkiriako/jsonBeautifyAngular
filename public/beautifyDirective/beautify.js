@@ -3,7 +3,7 @@ angular.module('jsonBeautifyAngular')
         return {
             restrict: 'E',
             replace: true,
-            templateUrl: 'beautify/beautify.html',
+            templateUrl: 'beautifyDirective/beautify.html',
             scope: {},
             controller: function ($scope, $window, beautifyFactory) {
                 $scope.init = function () {
@@ -14,6 +14,18 @@ angular.module('jsonBeautifyAngular')
                 $scope.selectTab = function (tab) {
                     $scope.selected = tab;
                     $scope.activePair = $scope.pairs[$scope.selected];
+                };
+
+                $scope.closeTab = function (tab) {
+                    beautifyFactory.removePair(tab);
+                    if ($scope.selected === $scope.pairs.length)
+                        $scope.selectTab($scope.selected - 1);
+                    else
+                        $scope.selectTab($scope.selected);
+                };
+
+                $scope.addTab = function () {
+                    $scope.selected = beautifyFactory.addPair();
                 };
 
                 $scope.updateInput = function () {
@@ -27,7 +39,7 @@ angular.module('jsonBeautifyAngular')
                     selection.removeAllRanges();
                     selection.addRange(range);
                 };
-                
+
                 $scope.init();
             }
         }

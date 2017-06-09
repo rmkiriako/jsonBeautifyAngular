@@ -1,0 +1,21 @@
+<div class="beautify">
+    <div class="col-xs-12 row-div">
+        <div class="col-xs-12">
+        <span class="tab-input btn-group" ng-repeat="pair in pairs track by $index">
+            <button class="btn btn-default" ng-class="{'btn-primary':selected==$index}" ng-click="selectTab($index)">{{pair.tabName}}</button>
+            <button class="btn btn-default" ng-class="{'btn-primary':selected==$index}" ng-click="closeTab($index)"><span class="fa fa-close"></span></button>
+        </span>
+            <button class="btn btn-default pull-right" ng-click="addTab()"><span class="fa fa-plus"></span></button>
+        </div>
+    </div>
+
+    <div class="col-xs-12 row-div">
+        <div class="col-xs-6">
+            <textarea ng-model="activePair.raw" ng-change="updateInput()"></textarea>
+        </div>
+
+        <div class="col-xs-6">
+            <pre ng-click="selectAll($event)">{{activePair.pretty}}</pre>
+        </div>
+    </div>
+</div>

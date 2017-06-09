@@ -3,7 +3,7 @@ angular.module('jsonBeautifyAngular')
         var Building = {NONE: 0, STRING_SINGLE: 1, STRING_DOUBLE: 2, INTEGER: 3, NULL: 4};
         var TokenType = {COLON: 0, COMMA: 1, NULL: 2, STRING: 3, BRACKET_OPEN: 4, BRACKET_CLOSE: 5};
 
-        var count = 1;
+        var maxCount = count = 1;
         var pairs = [{tabName: 0, raw: '', pretty: ''}];
 
         beautify = function (raw) {
@@ -166,10 +166,22 @@ angular.module('jsonBeautifyAngular')
             },
 
             updatePair: function (index) {
-                console.log('here', 'index', index, 'count', count);
                 pairs[index].pretty = beautify(pairs[index].raw);
                 if (index === count - 1)
-                    pairs[count] = {tabName: count++, raw: '', pretty: ''};
+                    pairs[count++] = {tabName: maxCount++, raw: '', pretty: ''};
+            },
+
+            removePair: function (index) {
+                pairs.splice(index, 1);
+                if (count > 0)
+                    count--;
+                else
+                    pairs[0] = {tabName: maxCount++, raw: '', pretty: ''};
+            },
+
+            addPair: function () {
+                pairs[count++] = {tabName: maxCount++, raw: '', pretty: ''};
+                return count - 1;
             }
         };
     });
