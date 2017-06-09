@@ -1,14 +1,17 @@
 <div class="beautify">
     <div class="col-xs-12 row-div">
         <div class="col-xs-10">
-        <span class="tab-input btn-group" ng-repeat="pair in pairs track by $index">
-            <button class="btn btn-default" ng-class="{'btn-primary':selected===$index}" ng-click="selectTab($index)" ng-dblclick="setEditingTagName(true)" ng-if="!editingTagName || selected!==$index">{{pair.tabName}}</button>
-            <input class="btn btn-outline-primary" ng-blur="setEditingTagName(false)" ng-model="pair.tabName" ng-if="editingTagName && selected===$index" style="border: 1px solid;"/>
-            <button class="btn btn-default" ng-class="{'btn-primary':selected===$index}" ng-click="closeTab($index)"><span class="fa fa-close"></span></button>
-        </span>
+            <span class="tab-input btn-group" ng-repeat="pair in pairs track by $index">
+                <button class="btn btn-default" ng-class="{'btn-primary':selected===$index}" ng-click="selectTab($index)" ng-dblclick="setEditingTagName(true)" ng-if="!editingTagName || selected!==$index">{{pair.tabName}}</button>
+                <input class="btn btn-outline-primary" ng-blur="setEditingTagName(false)" ng-model="pair.tabName" ng-if="editingTagName && selected===$index" style="border: 1px solid;"/>
+                <button class="btn btn-default" ng-class="{'btn-primary':selected===$index}" ng-click="closeTab($index)"><span class="fa fa-close"></span></button>
+            </span>
             <span class="pull-right">
-            <button class="btn btn-default" ng-click="addTab()"><span class="fa fa-plus"></span></button>
-        </span>
+                <button class="btn btn-default" ng-click="addTab()"><span class="fa fa-plus"></span></button>
+            </span>
+        </div>
+        <div class="col-xs-1 header-text">
+            <span class="fa fa-trash-o fa-2x" ng-if="trashedPairs.length"></span>
         </div>
     </div>
 
