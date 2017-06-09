@@ -1,27 +1,37 @@
 <div class="beautify">
     <div class="col-xs-12 row-div">
-        <div class="col-xs-12">
+        <div class="col-xs-10">
         <span class="tab-input btn-group" ng-repeat="pair in pairs track by $index">
             <button class="btn btn-default" ng-class="{'btn-primary':selected===$index}" ng-click="selectTab($index)" ng-dblclick="setEditingTagName(true)" ng-if="!editingTagName || selected!==$index">{{pair.tabName}}</button>
             <input class="btn btn-outline-primary" ng-blur="setEditingTagName(false)" ng-model="pair.tabName" ng-if="editingTagName && selected===$index" style="border: 1px solid;"/>
             <button class="btn btn-default" ng-class="{'btn-primary':selected===$index}" ng-click="closeTab($index)"><span class="fa fa-close"></span></button>
         </span>
-        <span class="pull-right">
+            <span class="pull-right">
             <button class="btn btn-default" ng-click="addTab()"><span class="fa fa-plus"></span></button>
         </span>
         </div>
     </div>
 
     <div class="col-xs-12 row-div">
-        <div class="col-xs-6">
+        <!--<div class="col-xs-1">-->
+        <!--&#45;&#45; saved sessions will go here &#45;&#45;-->
+        <!--</div>-->
+
+        <div class="col-xs-5">
             <textarea ng-model="activePair.raw" ng-change="updateInput()"></textarea>
         </div>
 
-        <div class="col-xs-6">
+        <div class="col-xs-5">
             <pre ng-click="selectAll($event)">{{activePair.pretty}}</pre>
         </div>
+
+        <div class="col-xs-1">
+            <button class="btn btn-danger col-xs-12" ng-repeat="trashedPair in trashedPairs track by $index" ng-mouseover="setTrashPreview(trashedPair)" ng-mouseleave="setTrashPreview()" ng-click="restoreTrashedPair($index)">{{trashedPair.tabName}}</button>
+
+            <div>{{trashPreview}}</div>
+        </div>
     </div>
-    
+
     <div class="col-xs-12 row-div">
         <div class="col-xs-12" ng-click="selectAll($event)">{{activePair.pretty}}</div>
     </div>

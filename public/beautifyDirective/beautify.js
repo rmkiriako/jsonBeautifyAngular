@@ -8,6 +8,7 @@ angular.module('jsonBeautifyAngular')
             controller: function ($scope, $window, beautifyFactory) {
                 $scope.init = function () {
                     $scope.pairs = beautifyFactory.getAllPairs();
+                    $scope.trashedPairs = beautifyFactory.getAllTrashedPairs();
                     $scope.selectTab(0);
                 };
 
@@ -43,6 +44,16 @@ angular.module('jsonBeautifyAngular')
 
                 $scope.setEditingTagName = function (value) {
                     $scope.editingTagName = value;
+                };
+
+                $scope.setTrashPreview = function (trashPair) {
+                    $scope.trashPreview = trashPair ? trashPair.raw : '';
+                };
+
+                $scope.restoreTrashedPair = function (index) {
+                    $scope.setTrashPreview();
+                    beautifyFactory.restoreTrashedPair(index);
+                    $scope.selectTab($scope.pairs.length - 1);
                 };
 
                 $scope.init();
