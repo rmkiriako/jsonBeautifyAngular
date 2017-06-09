@@ -176,7 +176,7 @@ angular.module('jsonBeautifyAngular')
                 var trashedPair = pairs.splice(index, 1)[0];
                 if (trashedPair.raw)
                     trashedPairs.push(trashedPair);
-                if (count > 0)
+                if (count > 1)
                     count--;
                 else
                     pairs[0] = {tabName: maxCount++, raw: '', pretty: ''};
