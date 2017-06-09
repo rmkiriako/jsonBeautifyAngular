@@ -14,6 +14,7 @@ angular.module('jsonBeautifyAngular')
                 $scope.selectTab = function (tab) {
                     $scope.selected = tab;
                     $scope.activePair = $scope.pairs[$scope.selected];
+                    $scope.setEditingTagName(false);
                 };
 
                 $scope.closeTab = function (tab) {
@@ -38,6 +39,10 @@ angular.module('jsonBeautifyAngular')
                     range.selectNodeContents(event.currentTarget);
                     selection.removeAllRanges();
                     selection.addRange(range);
+                };
+
+                $scope.setEditingTagName = function (value) {
+                    $scope.editingTagName = value;
                 };
 
                 $scope.init();
