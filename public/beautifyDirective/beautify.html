@@ -1,31 +1,24 @@
 <div class="beautify">
     <div class="col-xs-12 row-div">
-        <div class="col-xs-10">
-            <span class="tab-input btn-group" ng-repeat="pair in pairs track by $index">
-                <button class="btn btn-default" ng-class="{'btn-primary':selected===$index}" ng-click="selectTab($index)" ng-dblclick="setEditingTagName(true)" ng-if="!editingTagName || selected!==$index">{{pair.tabName}}</button>
-                <input class="btn btn-outline-primary" ng-blur="setEditingTagName(false)" ng-model="pair.tabName" ng-if="editingTagName && selected===$index" style="border: 1px solid;"/>
-                <button class="btn btn-default" ng-class="{'btn-primary':selected===$index}" ng-click="closeTab($index)"><span class="fa fa-close"></span></button>
-            </span>
-            <span class="pull-right">
-                <button class="btn btn-default" ng-click="addTab()"><span class="fa fa-plus"></span></button>
-            </span>
-        </div>
+        <tab class="col-xs-10 col-xs-offset-1" tabs="pairs" selected="tabSelected" add-tab-callback="addTabCallback" close-tab-callback="closeTabCallback"></tab>
+
         <div class="col-xs-1 header-text">
             <span class="fa fa-trash-o fa-2x" ng-if="trashedPairs.length"></span>
         </div>
     </div>
 
     <div class="col-xs-12 row-div">
-        <!--<div class="col-xs-1">-->
-        <!--&#45;&#45; saved sessions will go here &#45;&#45;-->
-        <!--</div>-->
-
-        <div class="col-xs-5">
-            <textarea ng-model="activePair.raw" ng-change="updateInput()"></textarea>
+        <div class="col-xs-1">
+            <button class="btn btn-default btn-block" ng-repeat="session in sessions" ng-click="loadSession(session)">session {{session}}</button>
+            <button class="btn btn-success btn-block" ng-click="newSession">fresh session</button>
         </div>
 
         <div class="col-xs-5">
-            <pre ng-click="selectAll($event)">{{activePair.pretty}}</pre>
+            <textarea ng-model="pairs[tabSelected].raw" ng-change="updateInput()"></textarea>
+        </div>
+
+        <div class="col-xs-5">
+            <pre ng-click="selectAll($event)">{{pairs[tabSelected].pretty}}</pre>
         </div>
 
         <div class="col-xs-1">
@@ -36,6 +29,6 @@
     </div>
 
     <div class="col-xs-12 row-div">
-        <div class="col-xs-12" ng-click="selectAll($event)">{{activePair.pretty}}</div>
+        <div class="col-xs-12" ng-click="selectAll($event)">{{pairs[tabSelected].pretty}}</div>
     </div>
 </div>
