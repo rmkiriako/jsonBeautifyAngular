@@ -1,1 +1,1 @@
-angular.module('jsonBeautifyAngular', []);
+angular.module('jsonBeautifyAngular', ['ngCookies']);
