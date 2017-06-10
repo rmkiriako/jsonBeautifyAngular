@@ -6,9 +6,12 @@
     color: blue; }
   .beautify .row-div {
     margin-top: 25px; }
-  .beautify .tab-input {
-    margin-right: 15px; }
   .beautify .header-text {
     text-align: center; }
+
+.tabs .tab {
+  margin-right: 15px; }
+.tabs input {
+  border: 1px solid; }
 
 /*# sourceMappingURL=app.css.map */

@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "AAAA,SAAU;EACR,KAAK,EAAE,IAAI;EAEX,iCAAc;IACZ,KAAK,EAAE,IAAI;IACX,MAAM,EAAE,MAAM;IACd,KAAK,EAAE,IAAI;EAGb,kBAAS;IACP,UAAU,EAAE,IAAI;EAGlB,oBAAW;IACT,YAAY,EAAE,IAAI;EAGpB,sBAAa;IACX,UAAU,EAAE,MAAM",
-"sources": ["../beautifyDirective/beautify.scss"],
+"mappings": "AAAA,SAAU;EACR,KAAK,EAAE,IAAI;EAEX,iCAAc;IACZ,KAAK,EAAE,IAAI;IACX,MAAM,EAAE,MAAM;IACd,KAAK,EAAE,IAAI;EAGb,kBAAS;IACP,UAAU,EAAE,IAAI;EAGlB,sBAAa;IACX,UAAU,EAAE,MAAM;;ACbpB,UAAK;EACH,YAAY,EAAE,IAAI;AAGpB,WAAM;EACJ,MAAM,EAAE,SAAS",
+"sources": ["../beautifyDirective/beautify.scss","../tabDirective/tab.scss"],
 "names": [],
 "file": "app.css"
 }
