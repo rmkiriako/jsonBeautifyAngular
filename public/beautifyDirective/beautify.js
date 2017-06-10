@@ -32,7 +32,6 @@ angular.module('jsonBeautifyAngular')
                 $scope.restoreTrashedPair = function (index) {
                     $scope.setTrashPreview();
                     beautifyFactory.restoreTrashedPair(index);
-                    // $scope.selectTab($scope.pairs.length - 1);
                     $scope.tabSelected = $scope.pairs.length - 1;
                 };
 

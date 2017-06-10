@@ -10,7 +10,7 @@ angular.module('jsonBeautifyAngular')
                 addTabCallback: '=',
                 closeTabCallback: '='
             },
-            controller: function ($scope) {
+            controller: function ($scope, $timeout) {
                 $scope.selectTab = function (tab) {
                     $scope.selected = tab;
                     $scope.endEditingTagName();
@@ -29,8 +29,11 @@ angular.module('jsonBeautifyAngular')
                     $scope.endEditingTagName();
                 };
 
-                $scope.beginEditingTagName = function () {
+                $scope.beginEditingTagName = function (index) {
                     $scope.editingTagName = true;
+                    $timeout(function () {
+                        angular.element('#editTagName' + index).focus()
+                    }, 0);
                 };
 
                 $scope.endEditingTagName = function () {
