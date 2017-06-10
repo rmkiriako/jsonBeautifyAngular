@@ -6,15 +6,13 @@ angular.module('jsonBeautifyAngular')
             templateUrl: 'beautifyDirective/beautify.html',
             scope: {},
             controller: function ($scope, $window, $cookies, beautifyFactory) {
-                $scope.sessions = [1, 2, 3];
-
                 $scope.init = function () {
-                    $scope.pairs = beautifyFactory.getAllPairs();
-                    $scope.trashedPairs = beautifyFactory.getAllTrashedPairs();
+                    $scope.sessionSelected = $scope.pairSelected = 0;
+                    $scope.sessions = beautifyFactory.getAllSessions();
                 };
 
                 $scope.updateInput = function () {
-                    beautifyFactory.updatePair($scope.tabSelected);
+                    beautifyFactory.updatePair($scope.sessionSelected, $scope.pairSelected);
                 };
 
                 $scope.selectAll = function (event) {
@@ -31,16 +29,29 @@ angular.module('jsonBeautifyAngular')
 
                 $scope.restoreTrashedPair = function (index) {
                     $scope.setTrashPreview();
-                    beautifyFactory.restoreTrashedPair(index);
-                    $scope.tabSelected = $scope.pairs.length - 1;
+                    beautifyFactory.restoreTrashedPair($scope.sessionSelected, index);
+                    $scope.pairSelected = $scope.sessions[sessionSelected].pairs.length - 1;
                 };
 
-                $scope.addTabCallback = function () {
-                    $scope.tabSelected = beautifyFactory.addPair();
+                $scope.addPairCallback = function () {
+                    $scope.pairSelected = beautifyFactory.addPair($scope.sessionSelected);
                 };
 
-                $scope.closeTabCallback = function (tab) {
-                    beautifyFactory.removePair(tab);
+                $scope.closePairCallback = function (pairIndex) {
+                    beautifyFactory.removePair($scope.sessionSelected, pairIndex);
+                };
+
+                $scope.selectSessionCallback = function () {
+                    $scope.pairSelected = 0;
+                };
+
+                $scope.addSessionCallback = function () {
+                    $scope.sessionSelected = beautifyFactory.addSession();
+                    $scope.pairSelected = 0;
+                };
+
+                $scope.closeSessionCallback = function (sessionIndex) {
+                    beautifyFactory.removeSession(sessionIndex);
                 };
 
                 $scope.init();

@@ -7,17 +7,23 @@ angular.module('jsonBeautifyAngular')
             scope: {
                 tabs: '=',
                 selected: '=',
-                addTabCallback: '=',
-                closeTabCallback: '='
+                vertical: '=?',
+                selectTabCallback: '=?',
+                addTabCallback: '=?',
+                closeTabCallback: '=?'
             },
             controller: function ($scope, $timeout) {
+
                 $scope.selectTab = function (tab) {
+                    if ($scope.selectTabCallback)
+                        $scope.selectTabCallback();
                     $scope.selected = tab;
                     $scope.endEditingTagName();
                 };
 
                 $scope.closeTab = function (tab) {
-                    $scope.closeTabCallback(tab);
+                    if ($scope.closeTabCallback)
+                        $scope.closeTabCallback(tab);
                     if ($scope.selected === $scope.tabs.length)
                         $scope.selectTab($scope.selected - 1);
                     else
@@ -25,7 +31,8 @@ angular.module('jsonBeautifyAngular')
                 };
 
                 $scope.addTab = function () {
-                    $scope.addTabCallback();
+                    if ($scope.addTabCallback)
+                        $scope.addTabCallback();
                     $scope.endEditingTagName();
                 };
 
