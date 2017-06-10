@@ -1,10 +1,11 @@
 <div>
-    <span class="tab-input btn-group" ng-repeat="tab in tabs track by $index">
+    <span class="tab-input btn-group" ng-class="{'col-xs-12':vertical}" ng-repeat="tab in tabs track by $index">
         <button class="btn btn-default" ng-class="{'btn-primary':selected===$index}" ng-click="selectTab($index)" ng-dblclick="beginEditingTagName($index)" ng-if="!editingTagName || selected!==$index">{{tab.tabName}}</button>
-        <input id="editTagName{{$index}}" class="btn btn-outline-primary" ng-blur="endEditingTagName()" ng-model="tab.tabName" ng-if="editingTagName && selected===$index" style="border: 1px solid;"/>
+        <input id="editTagName{{$index}}" class="btn btn-outline-primary" ng-blur="endEditingTagName()" ng-model="tab.tabName" ng-if="editingTagName && selected===$index" style="border: 1px solid;"/> 
+        <!--todo style to scss-->
         <button class="btn btn-default" ng-class="{'btn-primary':selected===$index}" ng-click="closeTab($index)"><span class="fa fa-close"></span></button>
     </span>
-        <span class="pull-right">
+    <span class="pull-right" ng-class="{'col-xs-12':vertical}">
         <button class="btn btn-default" ng-click="addTab()"><span class="fa fa-plus"></span></button>
     </span>
 </div>

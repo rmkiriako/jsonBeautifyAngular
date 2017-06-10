@@ -3,9 +3,15 @@ angular.module('jsonBeautifyAngular')
         var Building = {NONE: 0, STRING_SINGLE: 1, STRING_DOUBLE: 2, INTEGER: 3, NULL: 4};
         var TokenType = {COLON: 0, COMMA: 1, NULL: 2, STRING: 3, BRACKET_OPEN: 4, BRACKET_CLOSE: 5};
 
-        var maxCount = count = 1;
-        var pairs = [{tabName: 0, raw: '', pretty: ''}];
-        var trashedPairs = [];
+        var maxSessionCount = sessionCount = 1;
+        var trashedSessions;
+        var sessions = [{
+            tabName: 0,
+            maxPairCount: 1,
+            pairCount: 1,
+            pairs: [{tabName: 0, raw: '', pretty: ''}],
+            trashedPairs: []
+        }];
 
         beautify = function (raw) {
             pretty = "";
@@ -162,39 +168,67 @@ angular.module('jsonBeautifyAngular')
         };
 
         return {
-            getAllPairs: function () {
-                return pairs;
+            getAllSessions: function () {
+                return sessions;
             },
 
-            updatePair: function (index) {
-                pairs[index].pretty = beautify(pairs[index].raw);
-                if (index === count - 1)
-                    pairs[count++] = {tabName: maxCount++, raw: '', pretty: ''};
+            updatePair: function (sessionIndex, pairIndex) {
+                var session = sessions[sessionIndex];
+                var pair = session.pairs[pairIndex];
+                pair.pretty = beautify(pair.raw);
+                if (pairIndex === session.pairCount - 1)
+                    session.pairs[session.pairCount++] = {tabName: session.maxPairCount++, raw: '', pretty: ''};
             },
 
-            removePair: function (index) {
-                var trashedPair = pairs.splice(index, 1)[0];
+            removePair: function (sessionIndex, pairIndex) {
+                var session = sessions[sessionIndex];
+                var trashedPair = session.pairs.splice(pairIndex, 1)[0];
                 if (trashedPair.raw)
-                    trashedPairs.push(trashedPair);
-                if (count > 1)
-                    count--;
+                    session.trashedPairs.push(trashedPair);
+                if (session.pairCount > 1)
+                    session.pairCount--;
                 else
-                    pairs[0] = {tabName: maxCount++, raw: '', pretty: ''};
+                    session.pairs[0] = {tabName: sesssion.maxPairCount++, raw: '', pretty: ''};
             },
 
-            addPair: function () {
-                pairs[count++] = {tabName: maxCount++, raw: '', pretty: ''};
-                return count - 1;
+            addPair: function (sessionIndex) {
+                var session = sessions[sessionIndex];
+                session.pairs[session.pairCount++] = {tabName: session.maxPairCount++, raw: '', pretty: ''};
+                return session.pairCount - 1;
             },
 
-            getAllTrashedPairs: function () {
-                return trashedPairs;
+            restoreTrashedPair: function (sessionIndex, pairIndex) {
+                var session = sessions[sessionIndex];
+                var trashedPair = session.trashedPairs.splice(pairIndex, 1)[0];
+                session.pairs.push(trashedPair);
+                session.pairCount++;
             },
 
-            restoreTrashedPair: function (index) {
-                var trashedPair = trashedPairs.splice(index, 1)[0];
-                pairs.push(trashedPair);
-                count++;
+            removeSession: function (sessionIndex) {
+                var trashedSession = sessions.splice(sessionIndex, 1)[0];
+                if (trashedSession.pairs.length && trashedSession.pairs[0].raw)
+                    trashedSessions.push(trashedSession);
+                if (sessionCount > 1)
+                    sessionCount--;
+                else
+                    sessions[0] = [{
+                        tabName: 0,
+                        maxPairCount: 1,
+                        pairCount: 1,
+                        pairs: [{tabName: 0, raw: '', pretty: ''}],
+                        trashedPairs: []
+                    }];
+            },
+
+            addSession: function () {
+                sessions[sessionCount++] = {
+                    tabName: 0,
+                    maxPairCount: 1,
+                    pairCount: 1,
+                    pairs: [{tabName: 0, raw: '', pretty: ''}],
+                    trashedPairs: []
+                };
+                return sessionCount - 1;
             }
         };
     });
