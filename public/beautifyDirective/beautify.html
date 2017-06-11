@@ -4,8 +4,8 @@
         <toggle value="showHelp" icon="'fa-question'"></toggle>
         <toggle value="hideSideBars" icon="'fa-window-maximize'"></toggle>
         <span class="btn-group">
-            <button class="btn btn-default" ng-click="resetStore()"><span class="fa fa-refresh" style="color:red"></span></button>
-            <button class="btn btn-default" ng-click="restoreStore()" ng-if="showRestoreStore"><span class="fa fa-undo"></span></button>
+            <a class="btn btn-default" ng-click="resetStore()"><span class="fa fa-refresh" style="color:red"></span></a>
+            <a class="btn btn-default" ng-click="restoreStore()" ng-if="showRestoreStore"><span class="fa fa-undo"></span></a>
         </span>
     </div>
 
@@ -20,7 +20,7 @@
 
         <!--trash icon-->
         <div class="col-xs-1 header-text" ng-if="!hideSideBars">
-            <button class="btn btn-default" ng-click="clearTrashedPairs()" ng-if="sessions[sessionSelected.x].trashedPairs.length"><span class="fa fa-trash-o fa-2x"></span></span></button>
+            <a class="btn btn-default" ng-click="clearTrashedPairs()" ng-if="sessions[sessionSelected.x].trashedPairs.length"><span class="fa fa-trash-o fa-2x"></span></span></a>
         </div>
     </div>
 
@@ -44,7 +44,7 @@
 
         <!--trashed-->
         <div class="col-xs-1" ng-if="!hideSideBars">
-            <button class="btn btn-danger col-xs-12" ng-repeat="trashedPair in sessions[sessionSelected.x].trashedPairs track by $index" ng-mouseover="setTrashPreview(trashedPair)" ng-mouseleave="setTrashPreview()" ng-click="restoreTrashedPair($index)">{{trashedPair.tabName}}</button>
+            <a class="btn btn-danger col-xs-12" ng-repeat="trashedPair in sessions[sessionSelected.x].trashedPairs track by $index" ng-mouseover="setTrashPreview(trashedPair)" ng-mouseleave="setTrashPreview()" ng-click="restoreTrashedPair($index)">{{trashedPair.tabName}}</a>
             <div>{{trashPreview}}</div>
         </div>
     </div>
