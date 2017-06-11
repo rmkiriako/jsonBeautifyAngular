@@ -96,6 +96,8 @@ angular.module('jsonBeautifyAngular')
             },
 
             setSessionsX: function (x) {
+                if (!x)
+                    return;
                 sessions = x;
                 maxSessionCount = sessionCount = sessions.length;
                 trashedSessions = [];
