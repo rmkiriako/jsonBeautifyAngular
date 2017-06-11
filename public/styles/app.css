@@ -12,6 +12,8 @@
     height: 3em; }
   .beautify .header-text {
     text-align: center; }
+  .beautify .red {
+    color: red; }
 
 .tabs .tab {
   margin-right: 15px; }
