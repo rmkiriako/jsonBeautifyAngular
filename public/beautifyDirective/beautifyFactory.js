@@ -13,7 +13,7 @@ angular.module('jsonBeautifyAngular')
             trashedPairs: []
         }];
 
-        beautify = function (raw) {
+        var beautify = function (raw) {
             pretty = "";
             var indent = 0;
 
@@ -67,7 +67,7 @@ angular.module('jsonBeautifyAngular')
             return pretty;
         };
 
-        trim = function (raw) {
+        var trim = function (raw) {
             var start = raw.indexOf('{');
             var end = raw.lastIndexOf('}');
             if (start === -1)
@@ -77,7 +77,7 @@ angular.module('jsonBeautifyAngular')
             return raw.substring(start) + '}';
         };
 
-        lex = function (rawChar) {
+        var lex = function (rawChar) {
             var building = 0;
             var buildingProgress = "";
 
@@ -168,11 +168,11 @@ angular.module('jsonBeautifyAngular')
             return parsed;
         };
 
-        isInteger = function (c) {
+        var isInteger = function (c) {
             return (c >= '0' && c <= '9' || c === '.');
         };
 
-        makeIndent = function (indent) {
+        var makeIndent = function (indent) {
             var s = '';
             for (var i = 0; i < indent; i++)
                 s += "    ";
