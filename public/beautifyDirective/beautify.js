@@ -34,6 +34,10 @@ angular.module('jsonBeautifyAngular')
                     $scope.pairSelected = $scope.sessions[$scope.sessionSelected.x].pairs.length - 1;
                 };
 
+                $scope.clearTrashedPairs = function () {
+                    $scope.sessions[$scope.sessionSelected.x].trashedPairs = [];
+                };
+
                 $scope.addPairCallback = function () {
                     $scope.pairSelected = beautifyFactory.addPair($scope.sessionSelected.x);
                 };
