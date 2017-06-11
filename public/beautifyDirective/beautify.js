@@ -31,6 +31,8 @@ angular.module('jsonBeautifyAngular')
 
                 $scope.selectAll = function (event) {
                     var selection = $window.getSelection();
+                    if (!selection.isCollapsed)
+                        return;
                     var range = $window.document.createRange();
                     range.selectNodeContents(event.currentTarget);
                     selection.removeAllRanges();
