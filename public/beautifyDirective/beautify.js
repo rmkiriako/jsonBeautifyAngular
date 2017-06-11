@@ -7,12 +7,13 @@ angular.module('jsonBeautifyAngular')
             scope: {},
             controller: function ($scope, $window, $cookies, beautifyFactory) {
                 $scope.init = function () {
-                    $scope.sessionSelected = $scope.pairSelected = 0;
+                    $scope.sessionSelected = {x: 0};
+                    $scope.pairSelected = 0;
                     $scope.sessions = beautifyFactory.getAllSessions();
                 };
 
                 $scope.updateInput = function () {
-                    beautifyFactory.updatePair($scope.sessionSelected, $scope.pairSelected);
+                    beautifyFactory.updatePair($scope.sessionSelected.x, $scope.pairSelected);
                 };
 
                 $scope.selectAll = function (event) {
@@ -29,16 +30,16 @@ angular.module('jsonBeautifyAngular')
 
                 $scope.restoreTrashedPair = function (index) {
                     $scope.setTrashPreview();
-                    beautifyFactory.restoreTrashedPair($scope.sessionSelected, index);
+                    beautifyFactory.restoreTrashedPair($scope.sessionSelected.x, index);
                     $scope.pairSelected = $scope.sessions[sessionSelected].pairs.length - 1;
                 };
 
                 $scope.addPairCallback = function () {
-                    $scope.pairSelected = beautifyFactory.addPair($scope.sessionSelected);
+                    $scope.pairSelected = beautifyFactory.addPair($scope.sessionSelected.x);
                 };
 
                 $scope.closePairCallback = function (pairIndex) {
-                    beautifyFactory.removePair($scope.sessionSelected, pairIndex);
+                    beautifyFactory.removePair($scope.sessionSelected.x, pairIndex);
                 };
 
                 $scope.selectSessionCallback = function () {
@@ -46,7 +47,7 @@ angular.module('jsonBeautifyAngular')
                 };
 
                 $scope.addSessionCallback = function () {
-                    $scope.sessionSelected = beautifyFactory.addSession();
+                    $scope.sessionSelected.x = beautifyFactory.addSession();
                     $scope.pairSelected = 0;
                 };
 
