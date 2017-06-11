@@ -33,8 +33,8 @@ angular.module('jsonBeautifyAngular')
                 };
 
                 $scope.restoreStore = function () {
-                    $scope.sessions = $scope.prevStore;
-                    $scope.saveStore();
+                    $cookies.putObject('jsonBeautifyAngular', {x: $scope.prevStore});
+                    $scope.loadStore();
                 };
 
                 $scope.updateInput = function () {
