@@ -1,27 +1,17 @@
 {
   "name": "jsonbeautifyangular",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "server.js",
   "dependencies": {
-    "body-parser": "~1.5.2",
-    "express": "~4.7.2",
-    "lodash": "~3.10.0",
-    "method-override": "~2.1.2",
-    "mongoose": "~3.6.2",
-    "morgan": "~1.2.2"
+    "express": "~4.7.2"
   },
   "scripts": {
     "start": "node server.js"
   },
   "devDependencies": {
-    "angular-cookies": "^1.6.4",
-    "grunt": "^1.0.1",
-    "grunt-cli": "^1.2.0",
-    "grunt-run": "^0.7.0",
-    "lodash": "~3.10.0",
-    "strip-ansi": "^3.0.1"
+    "grunt-run": "^0.7.0"
   },
-  "author": "",
+  "author": "manuk",
   "license": "ISC",
   "description": ""
 }
