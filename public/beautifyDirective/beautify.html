@@ -3,13 +3,17 @@
     <div class="col-xs-12 row-div-mini">
         <toggle value="showHelp" icon="'fa-question'"></toggle>
         <toggle value="hideSideBars" icon="'fa-window-maximize'"></toggle>
+        <span class="btn-group">
+            <button class="btn btn-default" ng-click="resetStore()"><span class="fa fa-refresh" style="color:red"></span></button>
+            <button class="btn btn-default" ng-click="restoreStore()" ng-if="prevStore"><span class="fa fa-undo"></span></button>
+        </span>
     </div>
 
     <div class="col-xs-12 row-div" ng-if="showHelp">
         Hi there!<br/>
         This is placeholder text for the very helpful help-information that will help you use this app by providing you with very helpful information.
     </div>
-    
+
     <div class="col-xs-12 row-div high-row">
         <!--pairs tabs-->
         <tab class="col-xs-12 col-xs-offset-1" ng-class="{'col-xs-10':!hideSideBars, 'col-xs-offset-0':hideSideBars}" tabs="sessions[sessionSelected.x].pairs" selected="pairSelected" add-tab-callback="addPairCallback" close-tab-callback="closePairCallback"></tab>
