@@ -7,11 +7,11 @@
 
     <div class="col-xs-12 row-div">
         <!--pairs tabs-->
-        <tab class="col-xs-12 col-xs-offset-1" ng-class="{'col-xs-10':!hideSideBars, 'col-xs-offset-0':hideSideBars}" tabs="sessions[sessionSelected].pairs" selected="pairSelected" add-tab-callback="addPairCallback" close-tab-callback="closePairCallback"></tab>
+        <tab class="col-xs-12 col-xs-offset-1" ng-class="{'col-xs-10':!hideSideBars, 'col-xs-offset-0':hideSideBars}" tabs="sessions[sessionSelected.x].pairs" selected="pairSelected" add-tab-callback="addPairCallback" close-tab-callback="closePairCallback"></tab>
 
         <!--trash icon-->
         <div class="col-xs-1 header-text" ng-if="!hideSideBars">
-            <span class="fa fa-trash-o fa-2x" ng-if="sessions[sessionSelected].trashedPairs.length"></span>
+            <span class="fa fa-trash-o fa-2x" ng-if="sessions[sessionSelected.x].trashedPairs.length"></span>
         </div>
     </div>
 
@@ -19,29 +19,29 @@
         <!--sessions-->
         <div class="col-xs-1" ng-if="!hideSideBars">
             <div class="row">
-                <tab class="row" tabs="sessions" selected="sessionSelected" vertical="true" select-tab-callback="selectSessionCallback" add-tab-callback="addSessionCallback" close-tab-callback="closeSessionCallback"></tab>
+                <tab class="row" tabs="sessions" selected="sessionSelected.x" vertical="true" select-tab-callback="selectSessionCallback" add-tab-callback="addSessionCallback" close-tab-callback="closeSessionCallback"></tab>
             </div>
         </div>
 
         <!--raw-->
         <div class="col-xs-6" ng-class="{'col-xs-5':!hideSideBars}">
-            <textarea ng-model="sessions[sessionSelected].pairs[pairSelected].raw" ng-change="updateInput()"></textarea>
+            <textarea ng-model="sessions[sessionSelected.x].pairs[pairSelected].raw" ng-change="updateInput()"></textarea>
         </div>
 
         <!--pretty-->
         <div class="col-xs-6" ng-class="{'col-xs-5':!hideSideBars}">
-            <pre ng-click="selectAll($event)">{{sessions[sessionSelected].pairs[pairSelected].pretty}}</pre>
+            <pre ng-click="selectAll($event)">{{sessions[sessionSelected.x].pairs[pairSelected].pretty}}</pre>
         </div>
 
         <!--trashed-->
         <div class="col-xs-1" ng-if="!hideSideBars">
-            <button class="btn btn-danger col-xs-12" ng-repeat="trashedPair in sessions[sessionSelected].trashedPairs track by $index" ng-mouseover="setTrashPreview(trashedPair)" ng-mouseleave="setTrashPreview()" ng-click="restoreTrashedPair($index)">{{trashedPair.tabName}}</button>
+            <button class="btn btn-danger col-xs-12" ng-repeat="trashedPair in sessions[sessionSelected.x].trashedPairs track by $index" ng-mouseover="setTrashPreview(trashedPair)" ng-mouseleave="setTrashPreview()" ng-click="restoreTrashedPair($index)">{{trashedPair.tabName}}</button>
             <div>{{trashPreview}}</div>
         </div>
     </div>
 
     <!--one liner output-->
     <div class="col-xs-12 row-div">
-        <div class="col-xs-12" ng-click="selectAll($event)">{{sessions[sessionSelected].pairs[pairSelected].pretty}}</div>
+        <div class="col-xs-12" ng-click="selectAll($event)">{{sessions[sessionSelected.x].pairs[pairSelected].pretty}}</div>
     </div>
 </div>

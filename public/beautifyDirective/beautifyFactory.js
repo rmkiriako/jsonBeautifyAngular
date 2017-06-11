@@ -4,7 +4,7 @@ angular.module('jsonBeautifyAngular')
         var TokenType = {COLON: 0, COMMA: 1, NULL: 2, STRING: 3, BRACKET_OPEN: 4, BRACKET_CLOSE: 5};
 
         var maxSessionCount = sessionCount = 1;
-        var trashedSessions;
+        var trashedSessions = [];
         var sessions = [{
             tabName: 0,
             maxPairCount: 1,
