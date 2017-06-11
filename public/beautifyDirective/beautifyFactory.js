@@ -1,7 +1,7 @@
 angular.module('jsonBeautifyAngular')
     .factory('beautifyFactory', function () {
         var Building = {NONE: 0, STRING_SINGLE: 1, STRING_DOUBLE: 2, INTEGER: 3, NULL: 4};
-        var TokenType = {COLON: 0, COMMA: 1, NULL: 2, STRING: 3, BRACKET_OPEN: 4, BRACKET_CLOSE: 5};
+        var TokenType = {COLON: 0, COMMA: 1, NULL: 2, STRING: 3, INTEGER: 4, BRACKET_OPEN: 5, BRACKET_CLOSE: 6};
 
         var maxSessionCount = sessionCount = 1;
         var trashedSessions = [];
@@ -52,6 +52,13 @@ angular.module('jsonBeautifyAngular')
                             newLine = false;
                         }
                         pretty += '"' + t[1] + '"';
+                        break;
+                    case TokenType.INTEGER:
+                        if (newLine) {
+                            pretty += "\n" + makeIndent(indent);
+                            newLine = false;
+                        }
+                        pretty += t[1];
                         break;
                 }
             }
@@ -109,7 +116,7 @@ angular.module('jsonBeautifyAngular')
                                 break;
                             default:
                                 if (isInteger(c)) {
-                                    building = Building.INT;
+                                    building = Building.INTEGER;
                                     buildingProgress = "" + c;
                                 }
                         }
@@ -125,12 +132,13 @@ angular.module('jsonBeautifyAngular')
                             i--;
                         }
                         break;
-                    case Building.INT:
+                    case Building.INTEGER:
                         if (isInteger(c))
                             buildingProgress += c;
                         else {
                             building = Building.NONE;
-                            parsed.push([TokenType.STRING, buildingProgress]);
+                            parsed.push([TokenType.INTEGER, buildingProgress]);
+                            i--;
                         }
                         break;
                     case Building.STRING_SINGLE:
