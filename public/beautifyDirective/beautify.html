@@ -16,7 +16,7 @@
 
     <div class="col-xs-12 row-div high-row">
         <!--pairs tabs-->
-        <tab class="col-xs-12 col-xs-offset-1" ng-class="{'col-xs-10':!hideSideBars, 'col-xs-offset-0':hideSideBars}" tabs="sessions[sessionSelected.x].pairs" selected="pairSelected" add-tab-callback="addPairCallback" close-tab-callback="closePairCallback"></tab>
+        <tab class="col-xs-12 col-xs-offset-1" ng-class="{'col-xs-10':!hideSideBars, 'col-xs-offset-0':hideSideBars}" tabs="sessions[sessionSelected.x].pairs" selected="pairSelected" add-tab-callback="addPairCallback" close-tab-callback="closePairCallback" edit-tab-name-callback="editTabNameCallback"></tab>
 
         <!--trash icon-->
         <div class="col-xs-1 header-text" ng-if="!hideSideBars">
@@ -28,7 +28,7 @@
         <!--sessions-->
         <div class="col-xs-1" ng-if="!hideSideBars">
             <div class="row">
-                <tab class="row" tabs="sessions" selected="sessionSelected.x" vertical="true" select-tab-callback="selectSessionCallback" add-tab-callback="addSessionCallback" close-tab-callback="closeSessionCallback"></tab>
+                <tab class="row" tabs="sessions" selected="sessionSelected.x" vertical="true" select-tab-callback="selectSessionCallback" add-tab-callback="addSessionCallback" close-tab-callback="closeSessionCallback" edit-tab-name-callback="editTabNameCallback"></tab>
             </div>
         </div>
 

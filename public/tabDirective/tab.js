@@ -10,40 +10,43 @@ angular.module('jsonBeautifyAngular')
                 vertical: '=?',
                 selectTabCallback: '=?',
                 addTabCallback: '=?',
-                closeTabCallback: '=?'
+                closeTabCallback: '=?',
+                editTabNameCallback: '=?'
             },
             controller: function ($scope, $timeout) {
                 $scope.selectTab = function (tab) {
+                    $scope.selected = tab;
+                    $scope.editingTabName = false;
                     if ($scope.selectTabCallback)
                         $scope.selectTabCallback();
-                    $scope.selected = tab;
-                    $scope.endEditingTagName();
                 };
 
                 $scope.closeTab = function (tab) {
-                    if ($scope.closeTabCallback)
-                        $scope.closeTabCallback(tab);
                     if ($scope.selected === $scope.tabs.length)
                         $scope.selectTab($scope.selected - 1);
                     else
                         $scope.selectTab($scope.selected);
+                    if ($scope.closeTabCallback)
+                        $scope.closeTabCallback(tab);
                 };
 
                 $scope.addTab = function () {
+                    $scope.editingTabName = false;
                     if ($scope.addTabCallback)
                         $scope.addTabCallback();
-                    $scope.endEditingTagName();
                 };
 
-                $scope.beginEditingTagName = function (index) {
-                    $scope.editingTagName = true;
+                $scope.beginEditingTabName = function (index) {
+                    $scope.editingTabName = true;
                     $timeout(function () {
-                        angular.element('#editTagName' + index).focus()
+                        angular.element('#editTabName' + index).focus()
                     }, 0);
                 };
 
-                $scope.endEditingTagName = function () {
-                    $scope.editingTagName = false;
+                $scope.endEditingTabName = function () {
+                    $scope.editingTabName = false;
+                    if ($scope.editTabNameCallback)
+                        $scope.editTabNameCallback();
                 };
 
 
