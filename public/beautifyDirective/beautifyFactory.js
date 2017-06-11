@@ -7,14 +7,14 @@ angular.module('jsonBeautifyAngular')
         var sessionCount;
         var trashedSessions;
         var sessions;
-        
+
         var init = function () {
-           maxSessionCount = 0;
-           sessionCount = 1;
-           trashedSessions = [];
-           sessions = [newSession()];
+            maxSessionCount = 0;
+            sessionCount = 1;
+            trashedSessions = [];
+            sessions = [newSession()];
         };
-        
+
         var beautify = function (raw) {
             pretty = "";
             var indent = 0;
@@ -181,12 +181,16 @@ angular.module('jsonBeautifyAngular')
             return s;
         };
 
+        var newPair = function (index) {
+            return {tabName: index, raw: '', pretty: ''};
+        };
+
         var newSession = function () {
             return {
                 tabName: 'session ' + maxSessionCount++,
                 maxPairCount: 1,
                 pairCount: 1,
-                pairs: [{tabName: 0, raw: '', pretty: ''}],
+                pairs: [newPair(0)],
                 trashedPairs: []
             }
         };
@@ -203,7 +207,7 @@ angular.module('jsonBeautifyAngular')
                 var pair = session.pairs[pairIndex];
                 pair.pretty = beautify(pair.raw);
                 if (pairIndex === session.pairCount - 1)
-                    session.pairs[session.pairCount++] = {tabName: session.maxPairCount++, raw: '', pretty: ''};
+                    session.pairs[session.pairCount++] = newPair(session.maxPairCount++);
             },
 
             removePair: function (sessionIndex, pairIndex) {
@@ -214,12 +218,12 @@ angular.module('jsonBeautifyAngular')
                 if (session.pairCount > 1)
                     session.pairCount--;
                 else
-                    session.pairs[0] = {tabName: session.maxPairCount++, raw: '', pretty: ''};
+                    session.pairs[0] = newPair(session.maxPairCount++);
             },
 
             addPair: function (sessionIndex) {
                 var session = sessions[sessionIndex];
-                session.pairs[session.pairCount++] = {tabName: session.maxPairCount++, raw: '', pretty: ''};
+                session.pairs[session.pairCount++] = newPair(session.maxPairCount++);
                 return session.pairCount - 1;
             },
 
