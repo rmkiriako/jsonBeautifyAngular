@@ -31,7 +31,7 @@ angular.module('jsonBeautifyAngular')
                 $scope.restoreTrashedPair = function (index) {
                     $scope.setTrashPreview();
                     beautifyFactory.restoreTrashedPair($scope.sessionSelected.x, index);
-                    $scope.pairSelected = $scope.sessions[sessionSelected].pairs.length - 1;
+                    $scope.pairSelected = $scope.sessions[$scope.sessionSelected.x].pairs.length - 1;
                 };
 
                 $scope.addPairCallback = function () {
@@ -40,6 +40,8 @@ angular.module('jsonBeautifyAngular')
 
                 $scope.closePairCallback = function (pairIndex) {
                     beautifyFactory.removePair($scope.sessionSelected.x, pairIndex);
+                    if (pairIndex < $scope.pairSelected)
+                        $scope.pairSelected--;
                 };
 
                 $scope.selectSessionCallback = function () {
@@ -53,6 +55,8 @@ angular.module('jsonBeautifyAngular')
 
                 $scope.closeSessionCallback = function (sessionIndex) {
                     beautifyFactory.removeSession(sessionIndex);
+                    if (sessionIndex < $scope.sessionSelected.x)
+                        $scope.sessionSelected.x--;
                 };
 
                 $scope.init();
