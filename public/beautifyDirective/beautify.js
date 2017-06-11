@@ -15,7 +15,6 @@ angular.module('jsonBeautifyAngular')
                 };
 
                 $scope.loadStore = function () {
-                    return;
                     var store = $cookies.getObject('jsonBeautifyAngular');
                     if (store && store.x && store.x.length && store.x[0] && store.x[0].pairs && store.x[0].pairs.length && store.x[0].pairs[0] && store.x[0].pairs[0].raw) {
                         $scope.sessions = store.x;
@@ -24,21 +23,18 @@ angular.module('jsonBeautifyAngular')
                 };
 
                 $scope.saveStore = function () {
-                    return;
-                    console.log('saved');
                     $cookies.putObject('jsonBeautifyAngular', {x: $scope.sessions});
                 };
 
                 $scope.resetStore = function () {
-                    return;
                     $cookies.remove('jsonBeautifyAngular');
                     $scope.prevStore = $scope.sessions;
                     $scope.sessions = sessionsFactory.reset();
                 };
 
                 $scope.restoreStore = function () {
-                    return;
                     $scope.sessions = $scope.prevStore;
+                    $scope.saveStore();
                 };
 
                 $scope.updateInput = function () {

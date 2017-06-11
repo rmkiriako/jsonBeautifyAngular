@@ -71,10 +71,10 @@ angular.module('jsonBeautifyAngular')
                 session.pairCount++;
             },
 
-            clearTrashedPairs: function(sessionIndex){
+            clearTrashedPairs: function (sessionIndex) {
                 sessions[sessionIndex].trashedPairs = [];
             },
-            
+
             removeSession: function (sessionIndex) {
                 var trashedSession = sessions.splice(sessionIndex, 1)[0];
                 if (trashedSession.pairs.length && trashedSession.pairs[0].raw)
@@ -97,10 +97,8 @@ angular.module('jsonBeautifyAngular')
 
             setSessionsX: function (x) {
                 sessions = x;
-                maxSessionCount = 0;
-                sessionCount = 1;
+                maxSessionCount = sessionCount = sessions.length;
                 trashedSessions = [];
-                sessions = [newSession()];
             }
         };
     });
