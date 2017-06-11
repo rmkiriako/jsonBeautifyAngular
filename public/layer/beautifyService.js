@@ -4,17 +4,20 @@ angular.module('jsonBeautifyAngular')
         var TokenType = {COLON: 0, COMMA: 1, NULL: 2, STRING: 3, INTEGER: 4, BRACKET_OPEN: 5, BRACKET_CLOSE: 6};
 
         this.beautify = function (raw) {
-            pretty = "";
+            var pretty = "";
             var indent = 0;
 
             var trimmed = trim(raw);
             var token = lex(trimmed);
             var newLine = false;
+            var lineBreak = false;
 
             for (var i = 0; i < token.length; i++) {
                 var t = token[i];
                 switch (t[0]) {
                     case TokenType.BRACKET_OPEN:
+                        if (lineBreak)
+                            pretty += "\n\n\n\n\n";
                         newLine = true;
                         indent++;
                         pretty += t[1] + " ";
@@ -22,7 +25,7 @@ angular.module('jsonBeautifyAngular')
                     case TokenType.BRACKET_CLOSE:
                         pretty += "\n" + makeIndent(--indent) + t[1];
                         if (indent === 0)
-                            pretty += "\n\n\n\n\n";
+                            lineBreak = true;
                         break;
                     case TokenType.COLON:
                         pretty += " : ";
