@@ -47,7 +47,7 @@ angular.module('jsonBeautifyAngular')
                 };
 
 
-                $scope.selectTab(0);
+                $scope.selectTab($scope.selected ? $scope.selected : 0);
             }
         }
     });
