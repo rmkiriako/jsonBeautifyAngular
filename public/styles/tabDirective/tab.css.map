@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AACE,UAAK;EACH,YAAY,EAAE,IAAI;AAGpB,WAAM;EACJ,MAAM,EAAE,SAAS",
+"mappings": "AACE,UAAK;EACH,YAAY,EAAE,IAAI;AAGpB,WAAM;EACJ,MAAM,EAAE,SAAS;AAGnB,qBAAgB;EACd,aAAa,EAAE,IAAI",
 "sources": ["../../tabDirective/tab.scss"],
 "names": [],
 "file": "tab.css"
