@@ -5,15 +5,45 @@ angular.module('jsonBeautifyAngular')
             replace: true,
             templateUrl: 'beautifyDirective/beautify.html',
             scope: {},
-            controller: function ($scope, $window, $cookies, beautifyFactory) {
+            controller: function ($scope, $window, $cookies, sessionsFactory) {
                 $scope.init = function () {
                     $scope.sessionSelected = {x: 0};
                     $scope.pairSelected = 0;
-                    $scope.sessions = beautifyFactory.getAllSessions();
+                    $scope.sessions = sessionsFactory.getAllSessions();
+                    $scope.loadStore();
+                    $scope.saveStore();
+                };
+
+                $scope.loadStore = function () {
+                    return;
+                    var store = $cookies.getObject('jsonBeautifyAngular');
+                    if (store && store.x && store.x.length && store.x[0] && store.x[0].pairs && store.x[0].pairs.length && store.x[0].pairs[0] && store.x[0].pairs[0].raw) {
+                        $scope.sessions = store.x;
+                        sessionsFactory.setSessionsX($scope.sessions);
+                    }
+                };
+
+                $scope.saveStore = function () {
+                    return;
+                    console.log('saved');
+                    $cookies.putObject('jsonBeautifyAngular', {x: $scope.sessions});
+                };
+
+                $scope.resetStore = function () {
+                    return;
+                    $cookies.remove('jsonBeautifyAngular');
+                    $scope.prevStore = $scope.sessions;
+                    $scope.sessions = sessionsFactory.reset();
+                };
+
+                $scope.restoreStore = function () {
+                    return;
+                    $scope.sessions = $scope.prevStore;
                 };
 
                 $scope.updateInput = function () {
-                    beautifyFactory.updatePair($scope.sessionSelected.x, $scope.pairSelected);
+                    sessionsFactory.updatePair($scope.sessionSelected.x, $scope.pairSelected);
+                    $scope.saveStore();
                 };
 
                 $scope.selectAll = function (event) {
@@ -30,22 +60,26 @@ angular.module('jsonBeautifyAngular')
 
                 $scope.restoreTrashedPair = function (index) {
                     $scope.setTrashPreview();
-                    beautifyFactory.restoreTrashedPair($scope.sessionSelected.x, index);
+                    sessionsFactory.restoreTrashedPair($scope.sessionSelected.x, index);
                     $scope.pairSelected = $scope.sessions[$scope.sessionSelected.x].pairs.length - 1;
+                    $scope.saveStore();
                 };
 
                 $scope.clearTrashedPairs = function () {
-                    $scope.sessions[$scope.sessionSelected.x].trashedPairs = [];
+                    sessionsFactory.clearTrashedPairs($scope.sessionSelected.x);
+                    $scope.saveStore();
                 };
 
                 $scope.addPairCallback = function () {
-                    $scope.pairSelected = beautifyFactory.addPair($scope.sessionSelected.x);
+                    $scope.pairSelected = sessionsFactory.addPair($scope.sessionSelected.x);
+                    $scope.saveStore();
                 };
 
                 $scope.closePairCallback = function (pairIndex) {
-                    beautifyFactory.removePair($scope.sessionSelected.x, pairIndex);
+                    sessionsFactory.removePair($scope.sessionSelected.x, pairIndex);
                     if (pairIndex < $scope.pairSelected)
                         $scope.pairSelected--;
+                    $scope.saveStore();
                 };
 
                 $scope.selectSessionCallback = function () {
@@ -53,14 +87,16 @@ angular.module('jsonBeautifyAngular')
                 };
 
                 $scope.addSessionCallback = function () {
-                    $scope.sessionSelected.x = beautifyFactory.addSession();
+                    $scope.sessionSelected.x = sessionsFactory.addSession();
                     $scope.pairSelected = 0;
+                    $scope.saveStore();
                 };
 
                 $scope.closeSessionCallback = function (sessionIndex) {
-                    beautifyFactory.removeSession(sessionIndex);
+                    sessionsFactory.removeSession(sessionIndex);
                     if (sessionIndex < $scope.sessionSelected.x)
                         $scope.sessionSelected.x--;
+                    $scope.saveStore();
                 };
 
                 $scope.init();

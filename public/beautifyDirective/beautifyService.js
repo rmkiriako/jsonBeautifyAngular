@@ -1,21 +1,9 @@
 angular.module('jsonBeautifyAngular')
-    .factory('beautifyFactory', function () {
+    .service('beautifyService', function () {
         var Building = {NONE: 0, STRING_SINGLE: 1, STRING_DOUBLE: 2, INTEGER: 3, NULL: 4};
         var TokenType = {COLON: 0, COMMA: 1, NULL: 2, STRING: 3, INTEGER: 4, BRACKET_OPEN: 5, BRACKET_CLOSE: 6};
 
-        var maxSessionCount;
-        var sessionCount;
-        var trashedSessions;
-        var sessions;
-
-        var init = function () {
-            maxSessionCount = 0;
-            sessionCount = 1;
-            trashedSessions = [];
-            sessions = [newSession()];
-        };
-
-        var beautify = function (raw) {
+        this.beautify = function (raw) {
             pretty = "";
             var indent = 0;
 
@@ -179,74 +167,5 @@ angular.module('jsonBeautifyAngular')
             for (var i = 0; i < indent; i++)
                 s += "    ";
             return s;
-        };
-
-        var newPair = function (index) {
-            return {tabName: index, raw: '', pretty: ''};
-        };
-
-        var newSession = function () {
-            return {
-                tabName: 'session ' + maxSessionCount++,
-                maxPairCount: 1,
-                pairCount: 1,
-                pairs: [newPair(0)],
-                trashedPairs: []
-            }
-        };
-
-        init();
-
-        return {
-            getAllSessions: function () {
-                return sessions;
-            },
-
-            updatePair: function (sessionIndex, pairIndex) {
-                var session = sessions[sessionIndex];
-                var pair = session.pairs[pairIndex];
-                pair.pretty = beautify(pair.raw);
-                if (pairIndex === session.pairCount - 1)
-                    session.pairs[session.pairCount++] = newPair(session.maxPairCount++);
-            },
-
-            removePair: function (sessionIndex, pairIndex) {
-                var session = sessions[sessionIndex];
-                var trashedPair = session.pairs.splice(pairIndex, 1)[0];
-                if (trashedPair.raw)
-                    session.trashedPairs.push(trashedPair);
-                if (session.pairCount > 1)
-                    session.pairCount--;
-                else
-                    session.pairs[0] = newPair(session.maxPairCount++);
-            },
-
-            addPair: function (sessionIndex) {
-                var session = sessions[sessionIndex];
-                session.pairs[session.pairCount++] = newPair(session.maxPairCount++);
-                return session.pairCount - 1;
-            },
-
-            restoreTrashedPair: function (sessionIndex, pairIndex) {
-                var session = sessions[sessionIndex];
-                var trashedPair = session.trashedPairs.splice(pairIndex, 1)[0];
-                session.pairs.push(trashedPair);
-                session.pairCount++;
-            },
-
-            removeSession: function (sessionIndex) {
-                var trashedSession = sessions.splice(sessionIndex, 1)[0];
-                if (trashedSession.pairs.length && trashedSession.pairs[0].raw)
-                    trashedSessions.push(trashedSession);
-                if (sessionCount > 1)
-                    sessionCount--;
-                else
-                    sessions[0] = newSession();
-            },
-
-            addSession: function () {
-                sessions[sessionCount++] = newSession();
-                return sessionCount - 1;
-            }
         };
     });
