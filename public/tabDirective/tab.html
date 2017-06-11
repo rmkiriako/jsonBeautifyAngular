@@ -1,10 +1,10 @@
 <div class="tabs">
     <span class="tab btn-group" ng-class="{'col-xs-12':vertical, 'btn-group-vertical':vertical, 'div-row-bottom':vertical}" ng-repeat="tab in tabs track by $index">
-        <button class="btn btn-default" ng-class="{'btn-primary':selected===$index}" ng-click="selectTab($index)" ng-dblclick="beginEditingTabName($index)" ng-if="!editingTabName || selected!==$index">{{tab.tabName}}</button>
+        <a class="btn btn-default" ng-class="{'btn-primary':selected===$index}" ng-click="selectTab($index)" ng-dblclick="beginEditingTabName($index)" ng-if="!editingTabName || selected!==$index">{{tab.tabName}}</a>
         <input id="editTabName{{$index}}" class="btn btn-outline-primary" ng-blur="endEditingTabName()" ng-model="tab.tabName" ng-if="editingTabName && selected===$index"/>
-        <button class="btn btn-default" ng-class="{'btn-primary':selected===$index}" ng-click="closeTab($index)"><span class="fa fa-close"></span></button>
+        <a class="btn btn-default" ng-class="{'btn-primary':selected===$index}" ng-click="closeTab($index)"><span class="fa fa-close"></span></a>
     </span>
     <span class="pull-right" ng-class="{'col-xs-12':vertical}">
-        <button class="btn btn-default" ng-click="addTab()"><span class="fa fa-plus"></span></button>
+        <a class="btn btn-default" ng-click="addTab()"><span class="fa fa-plus"></span></a>
     </span>
 </div>
