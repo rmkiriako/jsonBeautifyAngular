@@ -17,9 +17,9 @@
 
     <div class="col-xs-12 row-div">
         <!--sessions-->
-        <div class="col-xs-1">
+        <div class="col-xs-1" ng-if="!hideSideBars">
             <div class="row">
-                <tab class="row" tabs="sessions" selected="sessionSelected" vertical="true" select-tab-callback="selectSessionCallback" add-tab-callback="addSessionCallback" close-tab-callback="closeSessionCallback" ng-if="!hideSideBars"></tab>
+                <tab class="row" tabs="sessions" selected="sessionSelected" vertical="true" select-tab-callback="selectSessionCallback" add-tab-callback="addSessionCallback" close-tab-callback="closeSessionCallback"></tab>
             </div>
         </div>
 
