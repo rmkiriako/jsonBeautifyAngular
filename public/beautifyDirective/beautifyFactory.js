@@ -3,16 +3,18 @@ angular.module('jsonBeautifyAngular')
         var Building = {NONE: 0, STRING_SINGLE: 1, STRING_DOUBLE: 2, INTEGER: 3, NULL: 4};
         var TokenType = {COLON: 0, COMMA: 1, NULL: 2, STRING: 3, INTEGER: 4, BRACKET_OPEN: 5, BRACKET_CLOSE: 6};
 
-        var maxSessionCount = sessionCount = 1;
-        var trashedSessions = [];
-        var sessions = [{
-            tabName: 0,
-            maxPairCount: 1,
-            pairCount: 1,
-            pairs: [{tabName: 0, raw: '', pretty: ''}],
-            trashedPairs: []
-        }];
-
+        var maxSessionCount;
+        var sessionCount;
+        var trashedSessions;
+        var sessions;
+        
+        var init = function () {
+           maxSessionCount = 0;
+           sessionCount = 1;
+           trashedSessions = [];
+           sessions = [newSession()];
+        };
+        
         var beautify = function (raw) {
             pretty = "";
             var indent = 0;
@@ -179,6 +181,18 @@ angular.module('jsonBeautifyAngular')
             return s;
         };
 
+        var newSession = function () {
+            return {
+                tabName: 'session ' + maxSessionCount++,
+                maxPairCount: 1,
+                pairCount: 1,
+                pairs: [{tabName: 0, raw: '', pretty: ''}],
+                trashedPairs: []
+            }
+        };
+
+        init();
+
         return {
             getAllSessions: function () {
                 return sessions;
@@ -223,23 +237,11 @@ angular.module('jsonBeautifyAngular')
                 if (sessionCount > 1)
                     sessionCount--;
                 else
-                    sessions[0] = {
-                        tabName: maxSessionCount++,
-                        maxPairCount: 1,
-                        pairCount: 1,
-                        pairs: [{tabName: 0, raw: '', pretty: ''}],
-                        trashedPairs: []
-                    };
+                    sessions[0] = newSession();
             },
 
             addSession: function () {
-                sessions[sessionCount++] = {
-                    tabName: maxSessionCount++,
-                    maxPairCount: 1,
-                    pairCount: 1,
-                    pairs: [{tabName: 0, raw: '', pretty: ''}],
-                    trashedPairs: []
-                };
+                sessions[sessionCount++] = newSession();
                 return sessionCount - 1;
             }
         };
