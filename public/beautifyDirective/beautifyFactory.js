@@ -188,7 +188,7 @@ angular.module('jsonBeautifyAngular')
                 if (session.pairCount > 1)
                     session.pairCount--;
                 else
-                    session.pairs[0] = {tabName: sesssion.maxPairCount++, raw: '', pretty: ''};
+                    session.pairs[0] = {tabName: session.maxPairCount++, raw: '', pretty: ''};
             },
 
             addPair: function (sessionIndex) {
@@ -211,18 +211,18 @@ angular.module('jsonBeautifyAngular')
                 if (sessionCount > 1)
                     sessionCount--;
                 else
-                    sessions[0] = [{
-                        tabName: 0,
+                    sessions[0] = {
+                        tabName: maxSessionCount++,
                         maxPairCount: 1,
                         pairCount: 1,
                         pairs: [{tabName: 0, raw: '', pretty: ''}],
                         trashedPairs: []
-                    }];
+                    };
             },
 
             addSession: function () {
                 sessions[sessionCount++] = {
-                    tabName: 0,
+                    tabName: maxSessionCount++,
                     maxPairCount: 1,
                     pairCount: 1,
                     pairs: [{tabName: 0, raw: '', pretty: ''}],
