@@ -1,7 +1,7 @@
 <div class="tabs">
     <span class="tab btn-group" ng-class="{'col-xs-12':vertical, 'btn-group-vertical':vertical, 'div-row-bottom':vertical}" ng-repeat="tab in tabs track by $index">
-        <button class="btn btn-default" ng-class="{'btn-primary':selected===$index}" ng-click="selectTab($index)" ng-dblclick="beginEditingTagName($index)" ng-if="!editingTagName || selected!==$index">{{tab.tabName}}</button>
-        <input id="editTagName{{$index}}" class="btn btn-outline-primary" ng-blur="endEditingTagName()" ng-model="tab.tabName" ng-if="editingTagName && selected===$index"/>
+        <button class="btn btn-default" ng-class="{'btn-primary':selected===$index}" ng-click="selectTab($index)" ng-dblclick="beginEditingTabName($index)" ng-if="!editingTabName || selected!==$index">{{tab.tabName}}</button>
+        <input id="editTabName{{$index}}" class="btn btn-outline-primary" ng-blur="endEditingTabName()" ng-model="tab.tabName" ng-if="editingTabName && selected===$index"/>
         <button class="btn btn-default" ng-class="{'btn-primary':selected===$index}" ng-click="closeTab($index)"><span class="fa fa-close"></span></button>
     </span>
     <span class="pull-right" ng-class="{'col-xs-12':vertical}">

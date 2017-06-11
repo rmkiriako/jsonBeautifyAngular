@@ -82,6 +82,10 @@ angular.module('jsonBeautifyAngular')
                     storeService.saveStore($scope.sessions);
                 };
 
+                $scope.editTabNameCallback = function () {
+                    storeService.saveStore($scope.sessions);
+                };
+
                 $scope.init();
             }
         }
