@@ -31,6 +31,8 @@ angular.module('jsonBeautifyAngular')
                         break;
                     case TokenType.BRACKET_CLOSE:
                         pretty += "\n" + makeIndent(--indent) + t[1];
+                        if (indent === 0)
+                            pretty += "\n\n\n\n\n";
                         break;
                     case TokenType.COLON:
                         pretty += " : ";
