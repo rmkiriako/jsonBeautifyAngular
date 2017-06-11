@@ -13,7 +13,6 @@ angular.module('jsonBeautifyAngular')
                 closeTabCallback: '=?'
             },
             controller: function ($scope, $timeout) {
-
                 $scope.selectTab = function (tab) {
                     if ($scope.selectTabCallback)
                         $scope.selectTabCallback();
