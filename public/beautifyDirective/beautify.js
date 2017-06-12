@@ -6,7 +6,9 @@ angular.module('jsonBeautifyAngular')
             templateUrl: 'beautifyDirective/beautify.html',
             scope: {},
             controller: function ($scope, $window, sessionsFactory, storeService) {
+
                 $scope.init = function () {
+                    $scope.hideSideBars = true;
                     $scope.sessionSelected = {x: 0};
                     $scope.pairSelected = 0;
                     sessionsFactory.setSessionsX(storeService.loadStore());
