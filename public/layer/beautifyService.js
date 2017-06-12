@@ -66,11 +66,12 @@ angular.module('jsonBeautifyAngular')
             if (start === -1)
                 start = 0;
             if (end === -1)
-                return raw.substring(start) + '}';
+                return raw.substring(start);
             return raw.substring(start, end + 1);
         };
 
         var lex = function (rawChar) {
+            rawChar += ' ';
             var building = 0;
             var buildingProgress = "";
 
