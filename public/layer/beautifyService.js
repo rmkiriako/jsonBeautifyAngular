@@ -64,10 +64,10 @@ angular.module('jsonBeautifyAngular')
             var start = raw.indexOf('{');
             var end = raw.lastIndexOf('}');
             if (start === -1)
-                return "";
-            if (end !== -1)
-                return raw.substring(start, end + 1);
-            return raw.substring(start) + '}';
+                start = 0;
+            if (end === -1)
+                return raw.substring(start) + '}';
+            return raw.substring(start, end + 1);
         };
 
         var lex = function (rawChar) {
