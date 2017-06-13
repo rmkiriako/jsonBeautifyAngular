@@ -1,7 +1,8 @@
 angular.module('jsonBeautifyAngular')
     .service('beautifyService', function () {
-        var Building = {NONE: 0, STRING_SINGLE: 1, STRING_DOUBLE: 2, INTEGER: 3, NULL: 4};
-        var TokenType = {COLON: 0, COMMA: 1, NULL: 2, STRING: 3, INTEGER: 4, BRACKET_OPEN: 5, BRACKET_CLOSE: 6};
+        var Building = {NONE: 0, STRING_SINGLE: 1, STRING_DOUBLE: 2, INTEGER: 3, CONSTANT: 4};
+        var TokenType = {COLON: 0, COMMA: 1, CONSTANT: 2, STRING: 3, INTEGER: 4, BRACKET_OPEN: 5, BRACKET_CLOSE: 6};
+        var Constant = ['null', 'true', 'false'];
 
         this.beautify = function (raw) {
             var pretty = "";
@@ -34,12 +35,12 @@ angular.module('jsonBeautifyAngular')
                         newLine = true;
                         pretty += ", ";
                         break;
-                    case TokenType.NULL:
+                    case TokenType.CONSTANT:
                         if (newLine) {
                             pretty += "\n" + makeIndent(indent);
                             newLine = false;
                         }
-                        pretty += "null";
+                        pretty += t[1];
                         break;
                     case TokenType.STRING:
                         if (newLine) {
@@ -77,7 +78,7 @@ angular.module('jsonBeautifyAngular')
 
             var parsed = [];
             for (var i = 0; i < rawChar.length; i++) {
-                var c = rawChar[i];
+                var c = rawChar[i].toLowerCase();
                 switch (building) {
                     case Building.NONE:
                         switch (c) {
@@ -92,11 +93,6 @@ angular.module('jsonBeautifyAngular')
                                 break;
                             case ']':
                                 parsed.push([TokenType.BRACKET_CLOSE, ']']);
-                                break;
-                            case 'n':
-                            case 'N':
-                                building = Building.NULL;
-                                buildingProgress = 0;
                                 break;
                             case '\'':
                                 building = Building.STRING_SINGLE;
@@ -116,18 +112,27 @@ angular.module('jsonBeautifyAngular')
                                 if (isInteger(c)) {
                                     building = Building.INTEGER;
                                     buildingProgress = "" + c;
+                                } else if (_.findIndex(Constant, function (constant) {
+                                        return constant[0] === c;
+                                    }) !== -1) {
+                                    building = Building.CONSTANT;
+                                    buildingProgress = c;
                                 }
                         }
                         break;
-                    case Building.NULL:
-                        if (((c === 'u' || c === 'U') && buildingProgress === 0) || ((c === 'l' || c === 'L') && buildingProgress > 0)) {
-                            if (++buildingProgress === 3) {
-                                building = Building.NONE;
-                                parsed.push([TokenType.NULL]);
-                            }
+                    case Building.CONSTANT:
+                        if (_.findIndex(Constant, function (constant) {
+                                return constant === buildingProgress + c;
+                            }) !== -1) {
+                            building = Building.NONE;
+                            parsed.push([TokenType.CONSTANT, buildingProgress + c]);
+                        } else if (_.findIndex(Constant, function (constant) {
+                                return constant.substring(0, buildingProgress.length + 1) === buildingProgress + c;
+                            }) !== -1) {
+                            buildingProgress += c;
                         } else {
                             building = Building.NONE;
-                            i--;
+                            i -= buildingProgress.length;
                         }
                         break;
                     case Building.INTEGER:
@@ -172,4 +177,5 @@ angular.module('jsonBeautifyAngular')
                 s += "    ";
             return s;
         };
-    });
+    })
+;
