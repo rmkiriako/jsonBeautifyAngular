@@ -1,12 +1,14 @@
-<div class="beautify">
+<div class="beautify row col-xs-12">
     <!--icons-->
     <div class="col-xs-12 row-div-mini">
-        <toggle value="showHelp" icon="'fa-question'"></toggle>
-        <toggle value="hideSideBars" icon="'fa-window-maximize'"></toggle>
-        <span class="btn-group">
-            <a class="btn btn-default" ng-click="resetStore()"><span class="fa fa-refresh red"></span></a>
-            <a class="btn btn-default" ng-click="restoreStore()" ng-if="showRestoreStore"><span class="fa fa-undo"></span></a>
-        </span>
+        <div class="col-xs-12">
+            <toggle value="showHelp" icon="'fa-question'"></toggle>
+            <toggle value="hideSideBars" icon="'fa-window-maximize'"></toggle>
+            <span class="btn-group">
+                <a class="btn btn-default" ng-click="resetStore()"><span class="fa fa-refresh red"></span></a>
+                <a class="btn btn-default" ng-click="restoreStore()" ng-if="showRestoreStore"><span class="fa fa-undo"></span></a>
+            </span>
+        </div>
     </div>
 
     <div class="col-xs-12" ng-if="showHelp">
