@@ -78,7 +78,8 @@ angular.module('jsonBeautifyAngular')
 
             var parsed = [];
             for (var i = 0; i < rawChar.length; i++) {
-                var c = rawChar[i].toLowerCase();
+                var cCased = rawChar[i];
+                var c = cCased.toLowerCase();
                 switch (building) {
                     case Building.NONE:
                         switch (c) {
@@ -147,7 +148,7 @@ angular.module('jsonBeautifyAngular')
                     case Building.STRING_SINGLE:
                         if (c != '\\')
                             if (c != '\'')
-                                buildingProgress += c;
+                                buildingProgress += cCased;
                             else {
                                 building = Building.NONE;
                                 parsed.push([TokenType.STRING, buildingProgress]);
@@ -156,7 +157,7 @@ angular.module('jsonBeautifyAngular')
                     case Building.STRING_DOUBLE:
                         if (c != '\\')
                             if (c != '"')
-                                buildingProgress += c;
+                                buildingProgress += cCased;
                             else {
                                 building = Building.NONE;
                                 parsed.push([TokenType.STRING, buildingProgress]);
