@@ -104,6 +104,7 @@ angular.module('jsonBeautifyAngular')
                                 buildingProgress = "";
                                 break;
                             case ':':
+                            case '=':
                                 parsed.push([TokenType.COLON]);
                                 break;
                             case ',':
