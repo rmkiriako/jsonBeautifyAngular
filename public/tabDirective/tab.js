@@ -43,7 +43,9 @@ angular.module('jsonBeautifyAngular')
                     }, 0);
                 };
 
-                $scope.endEditingTabName = function () {
+                $scope.endEditingTabName = function (event) {
+                    if (event && event.key !== 'Enter')
+                        return;
                     $scope.editingTabName = false;
                     if ($scope.editTabNameCallback)
                         $scope.editTabNameCallback();
