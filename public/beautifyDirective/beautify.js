@@ -66,6 +66,8 @@ angular.module('jsonBeautifyAngular')
                     sessionsFactory.removePair($scope.sessionSelected.x, pairIndex);
                     if (pairIndex < $scope.pairSelected)
                         $scope.pairSelected--;
+                    else if ($scope.pairSelected === $scope.sessions[$scope.sessionSelected.x].pairCount)
+                        $scope.pairSelected--;
                     storeService.saveStore($scope.sessions);
                 };
 
