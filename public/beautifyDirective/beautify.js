@@ -5,7 +5,16 @@ angular.module('jsonBeautifyAngular')
             replace: true,
             templateUrl: 'beautifyDirective/beautify.html',
             scope: {},
-            controller: function ($scope, $window, sessionsFactory, storeService) {
+            controller: function ($scope, $window, $timeout, $document, sessionsFactory, storeService) {
+                $document.on('keypress', function (e) {
+                    if (e.key === 't' && e.ctrlKey)
+                        $timeout($scope.addPairCallback, 0);
+                    if (e.key === 'w' && e.ctrlKey)
+                        $timeout($scope.closePairCallback, 0);
+                    if (e.key === 'Enter' && e.shiftKey)
+                        $timeout($scope.addSessionCallback, 0);
+
+                });
 
                 $scope.init = function () {
                     $scope.hideSideBars = true;
@@ -63,6 +72,7 @@ angular.module('jsonBeautifyAngular')
                 };
 
                 $scope.closePairCallback = function (pairIndex) {
+                    pairIndex = pairIndex ? pairIndex : $scope.pairSelected;
                     sessionsFactory.removePair($scope.sessionSelected.x, pairIndex);
                     if (pairIndex < $scope.pairSelected)
                         $scope.pairSelected--;
