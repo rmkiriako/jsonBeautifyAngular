@@ -8,12 +8,15 @@ angular.module('jsonBeautifyAngular')
             controller: function ($scope, $window, $timeout, $document, sessionsFactory, storeService) {
                 $document.on('keypress', function (e) {
                     if (e.key === 't' && e.ctrlKey)
-                        $timeout($scope.addPairCallback, 0);
+                        $timeout($scope.addPairCallback);
                     if (e.key === 'w' && e.ctrlKey)
-                        $timeout($scope.closePairCallback, 0);
+                        $timeout($scope.closePairCallback);
                     if (e.key === 'Enter' && e.shiftKey)
-                        $timeout($scope.addSessionCallback, 0);
-
+                        $timeout($scope.addSessionCallback);
+                    if (e.key === '[' && e.ctrlKey)
+                        $timeout($scope.selectPairLeft);
+                    if (e.key === ']' && e.ctrlKey)
+                        $timeout($scope.selectPairRight);
                 });
 
                 $scope.init = function () {
@@ -66,6 +69,16 @@ angular.module('jsonBeautifyAngular')
                     storeService.saveStore($scope.sessions);
                 };
 
+                $scope.selectPairLeft = function () {
+                    if ($scope.pairSelected > 0)
+                        $scope.pairSelected--;
+                };
+
+                $scope.selectPairRight = function () {
+                    if ($scope.pairSelected < $scope.sessions[$scope.sessionSelected.x].pairCount - 1)
+                        $scope.pairSelected++;
+                };
+
                 $scope.addPairCallback = function () {
                     $scope.pairSelected = sessionsFactory.addPair($scope.sessionSelected.x);
                     storeService.saveStore($scope.sessions);
@@ -86,6 +99,8 @@ angular.module('jsonBeautifyAngular')
                 };
 
                 $scope.addSessionCallback = function () {
+                    if ($scope.hideSideBars)
+                        $scope.hideSideBars = false;
                     $scope.sessionSelected.x = sessionsFactory.addSession();
                     $scope.pairSelected = 0;
                     storeService.saveStore($scope.sessions);
