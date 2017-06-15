@@ -11,26 +11,7 @@
         </div>
     </div>
 
-    <div class="col-xs-12" ng-if="showHelp">
-        <br/>This is a JSON Beuatifier.
-        <br/>
-        <br/>-- UI --
-        <br/>Across the top left corner are the show help toggle, hide left & and right sidebars toggle, reset saved data button, and undo reset saved data buttons (visible after ressting saved data button).
-        <br/>Along the left sidebar are the sessions. You can create (+), select (click), trash (x) and rename (doube click) sessions.
-        <br/>Acrosss the top are the tabs for the currently active session. You can create (+), select (click), trash (x) and rename (doube click) tabs. A new tab will be automatically created if the last tab is used.
-        <br/>Along the right sidebar are the trashed tabs for the currently selected session. You can preview (hover) and restore (click) trashed tabs. To permanently delete all trashed tabs for the currently selected session, click the trash icon at the top of the right sidebar.
-        <br/>Note, there is currently no way to retrieve deleted sessions.
-        <br/>In left giant box, input the unformatted JSON(s). This supports comments, multiple JSON objects, and some invalid JSON tolerance.
-        <br/>In the right giant box, the formatted JSON will output. Click to select the entire output, or drag select to select a subset.
-        <br/>At the bottom will be a 1-line form of the JSON output. Click to select the entire output, or drag select to select a subset.
-        <br/>
-        <br/>-- FEATURES --
-        <br/>Multiple tabs and sessions makes it easier to manage multiple JSONs.
-        <br/>Saves state in case app is closed or computer is restarted.
-        <br/>Allows multiple JSONs in input, to make easier to see multiple JSONs at once.
-        <br/>Tolerates invalid JSON.
-        <br/>Quicker to use. Creates tabs automatically, beautifies input without a submit button, selects entire output with a single click.
-    </div>
+    <help class="col-xs-12" ng-if="showHelp"></help>
 
     <div class="col-xs-12 row-div high-row">
         <!--pairs tabs-->
