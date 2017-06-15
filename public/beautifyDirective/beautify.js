@@ -85,6 +85,8 @@ angular.module('jsonBeautifyAngular')
                     sessionsFactory.removeSession(sessionIndex);
                     if (sessionIndex < $scope.sessionSelected.x)
                         $scope.sessionSelected.x--;
+                    else if ($scope.sessionSelected.x === $scope.sessions.length)
+                        $scope.sessionSelected.x--;
                     storeService.saveStore($scope.sessions);
                 };
 
