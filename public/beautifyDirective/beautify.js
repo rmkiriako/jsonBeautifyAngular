@@ -5,7 +5,7 @@ angular.module('jsonBeautifyAngular')
             replace: true,
             templateUrl: 'beautifyDirective/beautify.html',
             scope: {},
-            controller: function ($scope, $window, $timeout, $document, sessionsFactory, storeService) {
+            controller: function ($scope, $window, $timeout, $document, sessionsFactory, storeService, beautifyService) {
                 $document.on('keypress', function (e) {
                     if (e.key === 't' && e.ctrlKey)
                         $timeout($scope.addPairCallback);
@@ -36,6 +36,11 @@ angular.module('jsonBeautifyAngular')
                 $scope.restoreStore = function () {
                     storeService.restoreStore();
                     $scope.init();
+                };
+
+                $scope.updateAllowStringNones = function () {
+                    beautifyService.setAllowStringNones($scope.allowStringNones)
+                    sessionsFactory.updatePair($scope.sessionSelected.x, $scope.pairSelected);
                 };
 
                 $scope.updateInput = function () {

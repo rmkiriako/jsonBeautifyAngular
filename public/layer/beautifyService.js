@@ -1,8 +1,9 @@
 angular.module('jsonBeautifyAngular')
     .service('beautifyService', function () {
-        var Building = {NONE: 0, STRING_SINGLE: 1, STRING_DOUBLE: 2, INTEGER: 3, CONSTANT: 4};
-        var TokenType = {COLON: 0, COMMA: 1, CONSTANT: 2, STRING: 3, INTEGER: 4, BRACKET_OPEN: 5, BRACKET_CLOSE: 6};
+        var Building = {NONE: 0, STRING_SINGLE: 1, STRING_DOUBLE: 2, STRING_NONE: 3, INTEGER: 4, CONSTANT: 5};
+        var TokenType = {COLON: 0, COMMA: 1, CONSTANT: 2, STRING: 3, INTEGER: 5, BRACKET_OPEN: 6, BRACKET_CLOSE: 7};
         var Constant = ['null', 'true', 'false'];
+        var allowStringNones;
 
         this.beautify = function (raw) {
             var pretty = "";
@@ -61,6 +62,10 @@ angular.module('jsonBeautifyAngular')
             return pretty;
         };
 
+        this.setAllowStringNones = function (value) {
+            allowStringNones = value
+        };
+
         var trim = function (raw) {
             var start = raw.indexOf('{');
             var end = raw.lastIndexOf('}');
@@ -95,6 +100,12 @@ angular.module('jsonBeautifyAngular')
                             case ']':
                                 parsed.push([TokenType.BRACKET_CLOSE, ']']);
                                 break;
+                            case '(':
+                                parsed.push([TokenType.BRACKET_OPEN, '(']);
+                                break;
+                            case ')':
+                                parsed.push([TokenType.BRACKET_CLOSE, ')']);
+                                break;
                             case '\'':
                                 building = Building.STRING_SINGLE;
                                 buildingProgress = "";
@@ -111,14 +122,17 @@ angular.module('jsonBeautifyAngular')
                                 parsed.push([TokenType.COMMA]);
                                 break;
                             default:
-                                if (isInteger(c)) {
-                                    building = Building.INTEGER;
-                                    buildingProgress = "" + c;
-                                } else if (_.findIndex(Constant, function (constant) {
+                                if (_.findIndex(Constant, function (constant) {
                                         return constant[0] === c;
                                     }) !== -1) {
                                     building = Building.CONSTANT;
                                     buildingProgress = c;
+                                } else if (allowStringNones && isStringNone(c)) {
+                                    building = Building.STRING_NONE;
+                                    buildingProgress = "" + c;
+                                } else if (isInteger(c)) {
+                                    building = Building.INTEGER;
+                                    buildingProgress = "" + c;
                                 }
                         }
                         break;
@@ -164,6 +178,15 @@ angular.module('jsonBeautifyAngular')
                                 parsed.push([TokenType.STRING, buildingProgress]);
                             }
                         break;
+                    case Building.STRING_NONE:
+                        if (isStringNone(c))
+                            buildingProgress += c;
+                        else {
+                            building = Building.NONE;
+                            parsed.push([TokenType.STRING, buildingProgress]);
+                            i--;
+                        }
+                        break;
                 }
             }
             return parsed;
@@ -171,6 +194,10 @@ angular.module('jsonBeautifyAngular')
 
         var isInteger = function (c) {
             return (c >= '0' && c <= '9' || c === '.');
+        };
+
+        var isStringNone = function (c) {
+            return ['[', '{', ']', '}', '(', ')', ':', ',', '=', ' '].indexOf(c) === -1;
         };
 
         var makeIndent = function (indent) {
