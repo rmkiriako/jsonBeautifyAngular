@@ -146,9 +146,12 @@ angular.module('jsonBeautifyAngular')
                                 return constant.substring(0, buildingProgress.length + 1) === buildingProgress + c;
                             }) !== -1) {
                             buildingProgress += c;
-                        } else {
+                        } else if (!allowStringNones) {
                             building = Building.NONE;
                             i -= buildingProgress.length;
+                        } else {
+                            building = Building.STRING_NONE;
+                            i--;
                         }
                         break;
                     case Building.INTEGER:
@@ -180,7 +183,7 @@ angular.module('jsonBeautifyAngular')
                         break;
                     case Building.STRING_NONE:
                         if (isStringNone(c))
-                            buildingProgress += c;
+                            buildingProgress += cCased;
                         else {
                             building = Building.NONE;
                             parsed.push([TokenType.STRING, buildingProgress]);
