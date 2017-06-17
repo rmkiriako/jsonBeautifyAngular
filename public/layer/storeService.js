@@ -1,25 +1,28 @@
 angular.module('jsonBeautifyAngular')
-    .service('storeService', function ($cookies) {
+    .service('storeService', function () {
         var prevStore;
 
         this.loadStore = function () {
-            var store = $cookies.getObject('jsonBeautifyAngular');
-            if (store && store.x && store.x.length && store.x[0] && store.x[0].pairs && store.x[0].pairs.length && store.x[0].pairs[0])
-                return store.x;
+            var storeString = localStorage.getItem('jsonBeautifyAngular');
+            if (storeString) {
+                var store = JSON.parse(storeString);
+                if (store && store[0] && store[0].pairs && store[0].pairs.length && store[0].pairs[0])
+                    return store;
+            }
             return null;
         };
 
         this.saveStore = function (sessions) {
-            $cookies.putObject('jsonBeautifyAngular', {x: sessions});
+            localStorage.setItem('jsonBeautifyAngular', JSON.stringify(sessions));
         };
 
         this.resetStore = function () {
             prevStore = this.loadStore();
-            $cookies.remove('jsonBeautifyAngular');
+            localStorage.removeItem('jsonBeautifyAngular');
             return prevStore;
         };
 
         this.restoreStore = function () {
-            $cookies.putObject('jsonBeautifyAngular', {x: prevStore});
+            this.saveStore(prevStore);
         };
     });
