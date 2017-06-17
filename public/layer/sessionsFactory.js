@@ -26,12 +26,6 @@ angular.module('jsonBeautifyAngular')
             }
         };
 
-        var loadStore = function () {
-            var store = $cookies.getObject('jsonBeautifyAngular');
-            if (store && store.x && store.x.length && store.x[0] && store.x[0].pairs && store.x[0].pairs.length && store.x[0].pairs[0] && store.x[0].pairs[0].raw)
-                $scope.sessions = store.x;
-        };
-
         init();
 
         return {
