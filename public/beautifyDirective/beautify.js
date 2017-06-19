@@ -5,20 +5,7 @@ angular.module('jsonBeautifyAngular')
             replace: true,
             templateUrl: 'beautifyDirective/beautify.html',
             scope: {},
-            controller: function ($scope, $window, $timeout, $document, sessionsFactory, storeService, beautifyService) {
-                $document.on('keypress', function (e) {
-                    if (e.key === 't' && e.ctrlKey)
-                        $timeout($scope.addPairCallback);
-                    if (e.key === 'w' && e.ctrlKey)
-                        $timeout($scope.closePairCallback);
-                    if (e.key === 'Enter' && e.shiftKey)
-                        $timeout($scope.addSessionCallback);
-                    if (e.key === '[' && e.ctrlKey)
-                        $timeout($scope.selectPairLeft);
-                    if (e.key === ']' && e.ctrlKey)
-                        $timeout($scope.selectPairRight);
-                });
-
+            controller: function ($scope, $window, sessionsFactory, storeService, beautifyService, shortcutService) {
                 $scope.init = function () {
                     $scope.hideSideBars = true;
                     $scope.sessionSelected = {x: 0};
@@ -125,6 +112,12 @@ angular.module('jsonBeautifyAngular')
                 };
 
                 $scope.init();
+
+                shortcutService.addShortcut('t', true, false, $scope.addPairCallback);
+                shortcutService.addShortcut('w', true, false, $scope.closePairCallback);
+                shortcutService.addShortcut('Enter', false, true, $scope.addSessionCallback);
+                shortcutService.addShortcut('[', true, false, $scope.selectPairLeft);
+                shortcutService.addShortcut(']', true, false, $scope.selectPairRight);
             }
         }
     });

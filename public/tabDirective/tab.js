@@ -13,7 +13,7 @@ angular.module('jsonBeautifyAngular')
                 closeTabCallback: '=?',
                 editTabNameCallback: '=?'
             },
-            controller: function ($scope, $timeout) {
+            controller: function ($scope, $timeout, shortcutService) {
                 $scope.selectTab = function (tab) {
                     $scope.selected = tab;
                     $scope.editingTabName = false;
@@ -39,8 +39,8 @@ angular.module('jsonBeautifyAngular')
                 $scope.beginEditingTabName = function (index) {
                     $scope.editingTabName = true;
                     $timeout(function () {
-                        angular.element('#editTabName' + index).focus()
-                    }, 0);
+                        angular.element('#editTabName' + (index ? index : $scope.selected)).focus()
+                    }, 2);
                 };
 
                 $scope.endEditingTabName = function (event) {
@@ -51,8 +51,8 @@ angular.module('jsonBeautifyAngular')
                         $scope.editTabNameCallback();
                 };
 
-
                 $scope.selectTab($scope.selected ? $scope.selected : 0);
+                shortcutService.addShortcut('r', true, false, $scope.beginEditingTabName);
             }
         }
     });
