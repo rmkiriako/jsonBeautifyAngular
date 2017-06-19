@@ -3,7 +3,7 @@ angular.module('jsonBeautifyAngular')
         var Building = {NONE: 0, STRING_SINGLE: 1, STRING_DOUBLE: 2, STRING_NONE: 3, INTEGER: 4, CONSTANT: 5};
         var TokenType = {COLON: 0, COMMA: 1, CONSTANT: 2, STRING: 3, INTEGER: 5, BRACKET_OPEN: 6, BRACKET_CLOSE: 7};
         var Constant = ['null', 'true', 'false'];
-        var allowStringNones;
+        var allowStringNones, filters;
 
         this.beautify = function (raw) {
             var pretty = "";
@@ -59,11 +59,20 @@ angular.module('jsonBeautifyAngular')
                         break;
                 }
             }
-            return pretty;
+
+            return applyFilters(pretty);
         };
 
         this.setAllowStringNones = function (value) {
-            allowStringNones = value
+            allowStringNones = value;
+        };
+
+        this.setFilters = function (filtersString) {
+            filters = _.filter(_.map(filtersString.split('|'), function (filter) {
+                return filter.trim().toLowerCase();
+            }), function (filter) {
+                return filter;
+            });
         };
 
         var trim = function (raw) {
@@ -193,6 +202,21 @@ angular.module('jsonBeautifyAngular')
                 }
             }
             return parsed;
+        };
+
+        var applyFilters = function (pretty) {
+            if (!filters || filters.length === 0)
+                return pretty;
+
+            var filteredPrettyLines = _.filter(pretty.split('\n'), function (line) {
+                var lineLower = line.toLowerCase();
+                return _.some(filters, function (filter) {
+                    return lineLower.indexOf(filter) !== -1;
+                });
+            });
+            return _.reduce(filteredPrettyLines, function (prev, next) {
+                return prev + '\n' + next;
+            }, '');
         };
 
         var isInteger = function (c) {

@@ -26,7 +26,12 @@ angular.module('jsonBeautifyAngular')
                 };
 
                 $scope.updateAllowStringNones = function () {
-                    beautifyService.setAllowStringNones($scope.allowStringNones)
+                    beautifyService.setAllowStringNones($scope.allowStringNones);
+                    sessionsFactory.updatePair($scope.sessionSelected.x, $scope.pairSelected);
+                };
+
+                $scope.updateFilters = function () {
+                    beautifyService.setFilters($scope.filters);
                     sessionsFactory.updatePair($scope.sessionSelected.x, $scope.pairSelected);
                 };
 
