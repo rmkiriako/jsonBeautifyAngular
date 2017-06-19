@@ -24,6 +24,12 @@
         </div>
     </div>
 
+    <div class="col-xs-12 col-xs-offset-1 row-div" ng-class="{'col-xs-10':!hideSideBars, 'col-xs-offset-0':hideSideBars}">
+        <div class="col-xs-12">
+            <input ng-model="filters" style="width:100%" ng-change="updateFilters()"/>
+        </div>
+    </div>
+
     <div class="col-xs-12 row-div">
         <!--sessions-->
         <div class="col-xs-1" ng-if="!hideSideBars">
