@@ -1,5 +1,7 @@
 .beautify {
   color: blue; }
+  .beautify input.filter {
+    width: 100%; }
   .beautify pre, .beautify textarea {
     width: 100%;
     height: 1000px;

@@ -26,7 +26,7 @@
 
     <div class="col-xs-12 col-xs-offset-1 row-div" ng-class="{'col-xs-10':!hideSideBars, 'col-xs-offset-0':hideSideBars}">
         <div class="col-xs-12">
-            <input ng-model="filters" style="width:100%" ng-change="updateFilters()"/>
+            <input class='filter' ng-model="filters" ng-change="updateFilters()" placeholder="Enter filter text here; e.g. ecn | cssid"/>
         </div>
     </div>
 
