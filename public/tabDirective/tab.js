@@ -39,19 +39,20 @@ angular.module('jsonBeautifyAngular')
                 $scope.beginEditingTabName = function (index) {
                     $scope.editingTabName = true;
                     $timeout(function () {
-                        angular.element('#editTabName' + (index ? index : $scope.selected)).focus()
+                        angular.element('#editTabName' + (index || $scope.selected)).focus()
                     }, 2);
                 };
 
                 $scope.endEditingTabName = function (event) {
                     if (event && event.key !== 'Enter')
                         return;
+                    $scope.tabs[$scope.selected].tabName = $scope.tabs[$scope.selected].tabName || '_';
                     $scope.editingTabName = false;
                     if ($scope.editTabNameCallback)
                         $scope.editTabNameCallback();
                 };
 
-                $scope.selectTab($scope.selected ? $scope.selected : 0);
+                $scope.selectTab($scope.selected || 0);
                 shortcutService.addShortcut('r', true, false, $scope.beginEditingTabName);
             }
         }

@@ -51,7 +51,7 @@ angular.module('jsonBeautifyAngular')
                 };
 
                 $scope.setTrashPreview = function (trashPair) {
-                    $scope.trashPreview = trashPair ? trashPair.raw : '';
+                    $scope.trashPreview = trashPair && trashPair.raw || '';
                 };
 
                 $scope.restoreTrashedPair = function (index) {
@@ -82,7 +82,7 @@ angular.module('jsonBeautifyAngular')
                 };
 
                 $scope.closePairCallback = function (pairIndex) {
-                    pairIndex = pairIndex ? pairIndex : $scope.pairSelected;
+                    pairIndex = pairIndex || $scope.pairSelected;
                     sessionsFactory.removePair($scope.sessionSelected.x, pairIndex);
                     if (pairIndex < $scope.pairSelected)
                         $scope.pairSelected--;
