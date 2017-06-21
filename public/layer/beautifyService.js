@@ -18,8 +18,10 @@ angular.module('jsonBeautifyAngular')
                 var t = token[i];
                 switch (t[0]) {
                     case TokenType.BRACKET_OPEN:
-                        if (lineBreak)
+                        if (lineBreak) {
                             pretty += "\n\n\n\n\n";
+                            lineBreak = false;
+                        }
                         newLine = true;
                         indent++;
                         pretty += t[1] + " ";
